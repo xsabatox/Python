@@ -1,0 +1,120 @@
+# GUI-based version of RPSLS
+
+###################################################
+# Student should add code where relevant to the following.
+import simplegui
+import random
+
+
+# Functions that compute RPSLS
+# helper functions
+def name_to_number(name):
+    """
+    Converts the player's choice into a number between 0 and 4 as follows:
+    0 - rock
+    1 - Spock
+    2 - paper
+    3 - lizard
+    4 - scissors
+    """
+    
+    if name is "rock":
+        return 0
+    elif name is "Spock":
+        return 1
+    elif name is "paper":
+        return 2
+    elif name is "lizard":
+        return 3
+    elif name is "scissors":
+        return 4
+     
+def number_to_name(number):
+    """
+    Converts the computer's choice into a name as follows:
+    0 - rock
+    1 - Spock
+    2 - paper
+    3 - lizard
+    4 - scissors
+    """
+    
+    if number is 0:
+        return "rock"
+    elif number is 1:
+        return "Spock"
+    elif number is 2:
+        return "paper"
+    elif number is 3:
+        return "lizard"
+    elif number is 4:
+        return "scissors"
+
+def rpsls(player_choice): 
+    # print a blank line to separate consecutive games
+    print " "
+    # print out the message for the player's choice
+    print "Player chooses " + player_choice
+    # convert the player's choice to player_number using the function name_to_number()
+    player_number = name_to_number(player_choice)
+    # compute random guess for comp_number using random.randrange()
+    comp_number = random.randrange(0, 5)
+    # convert comp_number to comp_choice using the function number_to_name()
+    comp_choice = number_to_name(comp_number)
+    # print out the message for computer's choice
+    print "Computer chooses " + comp_choice
+    # compute difference of comp_number and player_number modulo five
+    difference = (comp_number - player_number) % 5
+    # use if/elif/else to determine winner, print winner message
+    if difference == 1 or difference == 2:
+        return "Computer wins!"
+    elif difference == 3 or difference == 4:
+        return "Player wins!"
+    else:
+        return "Player and computer tie!"
+
+
+# Handler for input field
+def get_guess(guess):
+    if guess not in ("rock", "Spock", "paper", "lizard", "scissors"):
+        print ""
+        print 'Error: Bad input',
+        print '"' + guess + '"',
+        print 'to rpsls'
+    else:
+        print rpsls(guess)
+
+
+# Create frame and assign callbacks to event handlers
+frame = simplegui.create_frame("GUI-based RPSLS", 200, 200)
+frame.add_input("Enter guess for RPSLS", get_guess, 200)
+
+
+# Start the frame animation
+frame.start()
+
+
+###################################################
+# Test
+
+get_guess("Spock")
+get_guess("dynamite")
+get_guess("paper")
+get_guess("lazer")
+
+
+###################################################
+# Sample expected output from test
+# Note that computer's choices may vary from this sample.
+
+#Player chose Spock
+#Computer chose paper
+#Computer wins!
+#
+#Error: Bad input "dynamite" to rpsls
+#
+#Player chose paper
+#Computer chose scissors
+#Computer wins!
+#
+#Error: Bad input "lazer" to rpsls
